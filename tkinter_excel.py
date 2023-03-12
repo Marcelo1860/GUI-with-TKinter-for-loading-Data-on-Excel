@@ -25,11 +25,67 @@ class Formulario(tk.Tk):
         self.ent_hoja.pack()
         
         # Label para indicar los datos a cargar
-        self.lbl_datos = tk.Label(self, text="Datos a cargar:")
+        self.lbl_datos = tk.Label(self, text="Fecha de ingreso")
         self.lbl_datos.pack()
         
         # Text para ingresar los datos a cargar
-        self.txt_datos = tk.Text(self)
+        self.txt_datos = tk.Text(self, height=1, width=100)
+        self.txt_datos.pack()
+
+        # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="Nombre Cliente")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=1, width=100)
+        self.txt_datos.pack()
+
+        # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="Modelo PBX")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=1, width=100)
+        self.txt_datos.pack()
+
+                # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="S/N")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=1, width=100)
+        self.txt_datos.pack()
+
+        # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="Falla acusada")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=3, width=100)
+        self.txt_datos.pack()
+
+        # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="Diagnostico")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=3, width=100)
+        self.txt_datos.pack()
+
+                # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="Resolucion")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=3, width=100)
+        self.txt_datos.pack()
+
+        # Label para indicar los datos a cargar
+        self.lbl_datos = tk.Label(self, text="PV")
+        self.lbl_datos.pack()
+        
+        # Text para ingresar los datos a cargar
+        self.txt_datos = tk.Text(self, height=1, width=100)
         self.txt_datos.pack()
         
         # Botón para cargar los datos a Excel
