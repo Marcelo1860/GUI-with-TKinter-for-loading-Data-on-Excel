@@ -43,7 +43,7 @@ class Formulario(tk.Tk):
         # Label para indicar los datos a cargar
         self.lbl_datos3 = tk.Label(self, text="Modelo PBX")
         self.lbl_datos3.pack()
-        
+
         # Text para ingresar los datos a cargar
         self.txt_datos3 = tk.Text(self, height=1, width=100)
         self.txt_datos3.pack()
@@ -72,7 +72,7 @@ class Formulario(tk.Tk):
         self.txt_datos6 = tk.Text(self, height=3, width=100)
         self.txt_datos6.pack()
 
-                # Label para indicar los datos a cargar
+        # Label para indicar los datos a cargar
         self.lbl_datos7 = tk.Label(self, text="Resolucion")
         self.lbl_datos7.pack()
         
@@ -87,7 +87,7 @@ class Formulario(tk.Tk):
         # Text para ingresar los datos a cargar
         self.txt_datos8 = tk.Text(self, height=1, width=100)
         self.txt_datos8.pack()
-        
+
         # Botón para cargar los datos a Excel
         self.btn_cargar = tk.Button(self, text="Cargar", command=self.cargar_datos)
         self.btn_cargar.pack()
@@ -100,13 +100,17 @@ class Formulario(tk.Tk):
         # Obtener el nombre del archivo de destino y la hoja de destino
         archivo_destino = self.ent_destino.get()
         hoja_destino = self.ent_hoja.get()
-        
-        # Obtener los datos ingresados en el campo de texto
-        datos = self.txt_datos1.get("1.0", "end-1c")
-        
-        # Convertir los datos en un DataFrame de pandas
-        df = pd.read_csv(io.StringIO(datos), sep='\t')
-        
+        lista_datos = [self.txt_datos1.get("1.0", "end-1c"),self.txt_datos2.get("1.0", "end-1c"),self.txt_datos3.get("1.0", "end-1c"),self.txt_datos4.get("1.0", "end-1c"),self.txt_datos5.get("1.0", "end-1c"),self.txt_datos6.get("1.0", "end-1c"),self.txt_datos7.get("1.0", "end-1c"),self.txt_datos8.get("1.0", "end-1c")]
+        print(lista_datos)
+
+        df = pd.read_excel(archivo_destino, hoja_destino)
+
+        new_row = pd.DataFrame({'Fecha': [0], 'Nombre cliente': [0], 'Modelo PBX': [0],'S/N': [0], 'Falla acusada': [0], 'Diagnostico': [0],'Resolucion': [0], 'PV': [0] })
+        df = pd.concat([df, new_row], ignore_index=True)
+
+        for i in range(8):
+            df.iloc[-1,i]=lista_datos[i]
+
         # Guardar el DataFrame en el archivo de destino
         writer = pd.ExcelWriter(archivo_destino, engine='xlsxwriter')
         df.to_excel(writer, sheet_name=hoja_destino, index=False)
