@@ -9,23 +9,7 @@ class Formulario(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Carga de datos a Excel")
-        
-        # Label para indicar el archivo de destino
-        self.lbl_destino = tk.Label(self, text="Archivo de destino:")
-        self.lbl_destino.pack()
-        
-        # Entry para ingresar el nombre del archivo de destino
-        self.ent_destino = tk.Entry(self)
-        self.ent_destino.pack()
-        
-        # Label para indicar la hoja de destino
-        self.lbl_hoja = tk.Label(self, text="Hoja de destino:")
-        self.lbl_hoja.pack()
-        
-        # Entry para ingresar el nombre de la hoja de destino
-        self.ent_hoja = tk.Entry(self)
-        self.ent_hoja.pack()
-        
+
         # Label para indicar los datos a cargar
         self.lbl_datos1 = tk.Label(self, text="Fecha de ingreso")
         self.lbl_datos1.pack()
@@ -100,12 +84,11 @@ class Formulario(tk.Tk):
     
     def cargar_datos(self):
         # Obtener el nombre del archivo de destino y la hoja de destino
-        archivo_destino = self.ent_destino.get()
-        hoja_destino = self.ent_hoja.get()
+
         lista_datos = [self.txt_datos1.get("1.0", "end-1c"),self.txt_datos2.get("1.0", "end-1c"),self.txt_datos3.get("1.0", "end-1c"),self.txt_datos4.get("1.0", "end-1c"),self.txt_datos5.get("1.0", "end-1c"),self.txt_datos6.get("1.0", "end-1c"),self.txt_datos7.get("1.0", "end-1c"),self.txt_datos8.get("1.0", "end-1c")]
         print(lista_datos)
 
-        df = pd.read_excel(archivo_destino, hoja_destino)
+        df = pd.read_excel('datos.xlsx', sheet_name='Hoja 1')
 
         new_row = pd.DataFrame({'Fecha': [0], 'Nombre cliente': [0], 'Modelo PBX': [0],'S/N': [0], 'Falla acusada': [0], 'Diagnostico': [0],'Resolucion': [0], 'PV': [0] })
         df = pd.concat([df, new_row], ignore_index=True)
@@ -114,8 +97,8 @@ class Formulario(tk.Tk):
             df.iloc[-1,i]=lista_datos[i]
 
         # Guardar el DataFrame en el archivo de destino
-        writer = pd.ExcelWriter(archivo_destino, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name=hoja_destino, index=False)
+        writer = pd.ExcelWriter('datos.xlsx', engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Hoja 1', index=False)
         writer.save()
         
         # Después de cargar los datos en el DataFrame
