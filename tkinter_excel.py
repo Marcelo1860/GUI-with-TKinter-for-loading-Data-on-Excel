@@ -1,6 +1,8 @@
 import tkinter as tk
 import pandas as pd
 import io
+from PIL import Image, ImageDraw, ImageFont
+import textwrap
 
 
 class Formulario(tk.Tk):
@@ -119,5 +121,46 @@ class Formulario(tk.Tk):
         # Después de cargar los datos en el DataFrame
         self.lbl_estado.config(text="Los datos se cargaron correctamente.")
 
+        # Crear una imagen en blanco
+        imagen = Image.new('RGB', (800, 1600), color='white')
+    
+        # Crear un objeto Draw para dibujar en la imagen
+        draw = ImageDraw.Draw(imagen)
+    
+        font_descripcion = ImageFont.truetype('arial.ttf', 20)
+        font_column = ImageFont.truetype('arial.ttf', 16)
+        font_value = ImageFont.truetype('arial.ttf', 14)
+
+        # Dibujar los textos en la imagen
+        x_column, x_value = 50, 200
+        y_start = 100
+        y_step = 30
+        prev_lines = 0
+
+        draw.text((x_column, y_start-50), 'Ing. Simonella - Comprobante tecnico', fill='green', font=font_descripcion)
+        for i, column in enumerate(df.columns):
+            # Dibujar el nombre de la columna
+            draw.text((x_column, y_start + y_step * 2 * i + prev_lines*y_step), column, fill='blue', font=font_column)
+        
+            # Obtener el valor de la última fila de la columna
+            value = str(df.iloc[-1][column])
+        
+            # Dividir el valor en varias líneas si es necesario
+            lines = textwrap.wrap(value, width=90)
+            num_lines = len(lines)
+        
+            # Dibujar cada línea de texto
+            for j, line in enumerate(lines):
+                draw.text((x_column, y_start + y_step * (2*i+1) +(prev_lines+j)*y_step), line, fill='black', font=font_value)
+
+            # Actualizar el número de líneas previas
+            prev_lines = prev_lines +  num_lines -1    
+
+        # Guardar la imagen en un archivo temporal
+        imagen_path = '{}_{}_{}.pdf'.format(df.iloc[-1,0],df.iloc[-1,1],df.iloc[-1,2])
+        #imagen_path = 'tata.pdf'
+        imagen.save(imagen_path)
+
 formulario = Formulario()
 formulario.mainloop()
+
